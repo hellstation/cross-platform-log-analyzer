@@ -1,0 +1,20 @@
+id: DET-WIN-003
+name: New Windows Account
+description: A new user account was created (4720).
+platform: windows
+enabled: true
+severity: high
+confidence: 0.9
+type: single_event
+mitre_attack:
+  - T1136.001
+recommendations:
+  - Validate change ticket and creating administrator.
+  - Review group memberships added within the same timeframe.
+false_positive_notes:
+  - Legitimate onboarding or service account provisioning.
+match:
+  all:
+    - field: event_id
+      op: eq
+      value: "4720"

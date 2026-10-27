@@ -1,0 +1,27 @@
+id: DET-LNX-001
+name: SSH Brute Force
+description: Multiple failed SSH authentication attempts from the same source IP within a short window.
+platform: linux
+enabled: true
+severity: high
+confidence: 0.85
+type: aggregation
+mitre_attack:
+  - T1110.001
+recommendations:
+  - Block or rate-limit the source IP at the perimeter if not a known scanner.
+  - Review auth.log for successful logins from the same IP after failures.
+  - Validate whether the targeted accounts are privileged.
+false_positive_notes:
+  - Misconfigured automation or vulnerability scanners.
+  - Password rotation scripts with stale credentials.
+aggregation:
+  group_by:
+    - source_ip
+  window_minutes: 10
+  threshold: 5
+  event_filter:
+    all:
+      - field: event_type
+        op: eq
+        value: ssh_login_failure

@@ -1,0 +1,23 @@
+id: DET-WIN-004
+name: Security Group Modification
+description: Member added to a privileged security group (4728/4732).
+platform: windows
+enabled: true
+severity: high
+confidence: 0.85
+type: single_event
+mitre_attack:
+  - T1098
+recommendations:
+  - Identify target group name in event data and confirm approval.
+  - Review recent logons for the actor account.
+false_positive_notes:
+  - Scheduled group policy or IAM automation.
+match:
+  any:
+    - field: event_id
+      op: eq
+      value: "4728"
+    - field: event_id
+      op: eq
+      value: "4732"

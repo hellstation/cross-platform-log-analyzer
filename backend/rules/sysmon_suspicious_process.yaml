@@ -1,0 +1,27 @@
+id: DET-SYS-003
+name: Sysmon Process from Suspicious Spool Path
+description: Sysmon Event 1 — process activity referencing print spool driver directories or payload-like paths.
+platform: windows
+enabled: true
+severity: medium
+confidence: 0.7
+type: single_event
+mitre_attack:
+  - T1204
+recommendations:
+  - Review full command line and parent process in raw event.
+  - Hunt for matching Event 7 loads on the same host.
+false_positive_notes:
+  - Printer driver installation and spooler maintenance.
+match:
+  all:
+    - field: event_id
+      op: eq
+      value: "1"
+  any:
+    - field: event_data.CommandLine
+      op: contains
+      value: spool
+    - field: event_data.Image
+      op: contains
+      value: payload

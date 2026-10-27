@@ -1,0 +1,46 @@
+"""FastAPI application."""
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from sentineltrace import __version__
+from sentineltrace.api.routes import (
+    alerts_router,
+    cases_router,
+    events_router,
+    export_router,
+    health_router,
+    ingest_router,
+    rules_router,
+    stats_router,
+)
+from sentineltrace.config import get_settings
+
+
+def create_app() -> FastAPI:
+    settings = get_settings()
+    app = FastAPI(
+        title="SentinelTrace API",
+        version=__version__,
+        docs_url="/api/docs",
+        openapi_url="/api/openapi.json",
+    )
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.cors_origin_list,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    app.include_router(health_router, prefix="/api")
+    app.include_router(events_router, prefix="/api")
+    app.include_router(alerts_router, prefix="/api")
+    app.include_router(ingest_router, prefix="/api")
+    app.include_router(rules_router, prefix="/api")
+    app.include_router(cases_router, prefix="/api")
+    app.include_router(stats_router, prefix="/api")
+    app.include_router(export_router, prefix="/api")
+    return app
+
+
+app = create_app()

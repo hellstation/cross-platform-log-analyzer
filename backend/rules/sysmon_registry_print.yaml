@@ -1,0 +1,23 @@
+id: DET-SYS-002
+name: Sysmon Print Printer Registry Modification
+description: Sysmon Event 13 — registry change under Print Printers (driver module / CopyFiles paths).
+platform: windows
+enabled: true
+severity: high
+confidence: 0.8
+type: single_event
+mitre_attack:
+  - T1112
+recommendations:
+  - Inspect Details and TargetObject for DLL paths and printer names.
+  - Correlate with Event 7 image loads and spoolsv.exe activity.
+false_positive_notes:
+  - Normal printer installation or driver staging by administrators.
+match:
+  all:
+    - field: event_id
+      op: eq
+      value: "13"
+    - field: event_data.TargetObject
+      op: contains
+      value: Print

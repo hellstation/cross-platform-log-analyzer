@@ -1,0 +1,29 @@
+id: DET-LNX-003
+name: Successful Login After Failures
+description: SSH success following multiple failures for the same user and source IP.
+platform: linux
+enabled: true
+severity: medium
+confidence: 0.75
+type: aggregation
+mitre_attack:
+  - T1110
+recommendations:
+  - Interview the account owner and review session activity.
+  - Check for new authorized keys or cron jobs.
+false_positive_notes:
+  - User finally entering correct password after typos.
+aggregation:
+  group_by:
+    - source_ip
+    - username
+  window_minutes: 20
+  threshold: 6
+  event_filter:
+    any:
+      - field: event_type
+        op: eq
+        value: ssh_login_failure
+      - field: event_type
+        op: eq
+        value: ssh_login_success

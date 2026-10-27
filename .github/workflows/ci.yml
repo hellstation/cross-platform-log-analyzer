@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: sentineltrace
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: sentineltrace
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Ruff
+        run: ruff check src tests && ruff format --check src tests
+      - name: Migrate
+        env:
+          DATABASE_URL: postgresql+psycopg://sentineltrace:test@localhost:5432/sentineltrace
+        run: alembic upgrade head
+      - name: Pytest
+        env:
+          DATABASE_URL: postgresql+psycopg://sentineltrace:test@localhost:5432/sentineltrace
+          RULES_PATH: ${{ github.workspace }}/backend/rules
+        run: pytest -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build

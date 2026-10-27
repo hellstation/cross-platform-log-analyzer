@@ -1,0 +1,23 @@
+id: DET-WIN-005
+name: Suspicious Service Installation
+description: New service installed via Security 4697 or System 7045.
+platform: windows
+enabled: true
+severity: high
+confidence: 0.8
+type: single_event
+mitre_attack:
+  - T1543.003
+recommendations:
+  - Inspect service name and binary path in raw XML.
+  - Search for related process creation on the same host.
+false_positive_notes:
+  - Software deployment tools installing agents.
+match:
+  any:
+    - field: event_id
+      op: eq
+      value: "4697"
+    - field: event_id
+      op: eq
+      value: "7045"

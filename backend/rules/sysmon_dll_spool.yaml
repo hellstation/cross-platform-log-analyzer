@@ -1,0 +1,24 @@
+id: DET-SYS-001
+name: Sysmon DLL Load from Print Spooler Driver Path
+description: Sysmon Event 7 — module loaded from the print driver spool directory (common in Spooler abuse).
+platform: windows
+enabled: true
+severity: high
+confidence: 0.85
+type: single_event
+mitre_attack:
+  - T1574.001
+recommendations:
+  - Validate the DLL hash against known good driver packages.
+  - Check spoolsv.exe parent chain and recent printer driver installs.
+  - Review Sysmon Event 1/13 on the same host around the same time.
+false_positive_notes:
+  - Legitimate vendor printer driver updates.
+match:
+  all:
+    - field: event_id
+      op: eq
+      value: "7"
+    - field: event_data.ImageLoaded
+      op: contains
+      value: spool

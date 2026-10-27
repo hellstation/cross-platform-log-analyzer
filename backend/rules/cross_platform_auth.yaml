@@ -1,0 +1,38 @@
+id: DET-X-001
+name: Cross-Platform Authentication Correlation
+description: Linux SSH failures followed by Windows logon activity for the same user or IP.
+platform: any
+enabled: true
+severity: high
+confidence: 0.7
+type: correlation
+mitre_attack:
+  - T1078
+recommendations:
+  - Verify whether the user should authenticate on both platforms within the window.
+  - Check VPN and MFA logs for the source IP.
+false_positive_notes:
+  - Same operator working Linux jump host then Windows RDP with shared username.
+correlation:
+  window_minutes: 60
+  link_fields:
+    - username
+    - source_ip
+  platforms:
+    - linux
+    - windows
+  min_left: 3
+  min_right: 1
+  left_filter:
+    all:
+      - field: event_type
+        op: eq
+        value: ssh_login_failure
+  right_filter:
+    any:
+      - field: event_id
+        op: eq
+        value: "4624"
+      - field: event_id
+        op: eq
+        value: "4625"

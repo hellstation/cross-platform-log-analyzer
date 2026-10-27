@@ -1,0 +1,26 @@
+id: DET-LNX-004
+name: Linux Sudo Activity
+description: Elevated sudo command execution frequency from a single user.
+platform: linux
+enabled: true
+severity: medium
+confidence: 0.65
+type: aggregation
+mitre_attack:
+  - T1548.003
+recommendations:
+  - Review commands executed and parent sessions.
+  - Confirm the user typically performs this volume of sudo activity.
+false_positive_notes:
+  - Administrators running maintenance scripts.
+aggregation:
+  group_by:
+    - username
+    - hostname
+  window_minutes: 10
+  threshold: 5
+  event_filter:
+    all:
+      - field: event_type
+        op: eq
+        value: sudo_command

@@ -1,0 +1,26 @@
+id: DET-WIN-001
+name: Windows Failed Logons
+description: Repeated Windows logon failure events (4625) from the same source.
+platform: windows
+enabled: true
+severity: medium
+confidence: 0.8
+type: aggregation
+mitre_attack:
+  - T1110
+recommendations:
+  - Review Logon Type and Workstation fields in raw events.
+  - Check for subsequent 4624 from the same IP.
+false_positive_notes:
+  - Misconfigured service accounts after password changes.
+aggregation:
+  group_by:
+    - source_ip
+    - username
+  window_minutes: 15
+  threshold: 5
+  event_filter:
+    all:
+      - field: event_id
+        op: eq
+        value: "4625"
