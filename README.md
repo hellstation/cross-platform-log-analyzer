@@ -44,7 +44,7 @@ Typer CLI ──────┴──► Core (parsers + DetectionEngine + rules
 
 Details: [docs/architecture.md](docs/architecture.md)
 
-## 🚀 Quick start
+## Quick start
 
 ### Docker (recommended)
 
@@ -106,7 +106,7 @@ sentineltrace export --format html --output report.html
 
 Run `sentineltrace --help` for all commands.
 
-## 🎯 Detection catalog
+## Detection catalog
 
 | ID            | Name                                      | Platform | MITRE ATT&CK |
 |---------------|-------------------------------------------|----------|--------------|
@@ -123,7 +123,7 @@ Run `sentineltrace --help` for all commands.
 
 Rules live in `backend/rules/*.yaml`. Tune `window_minutes` and `threshold` per rule to match your environment.
 
-## 📂 Supported log sources
+## Supported log sources
 
 | Source                    | Format / file             |
 |---------------------------|---------------------------|
@@ -136,7 +136,7 @@ Rules live in `backend/rules/*.yaml`. Tune `window_minutes` and `threshold` per 
 
 > **Note:** synthetic Linux scenarios are included in `fixtures/linux/`. Binary `.evtx` fixtures are intentionally not shipped — use your own exports for Windows testing.
 
-## 🔌 API
+## API
 
 Interactive OpenAPI docs are available at `/api/docs`.
 
@@ -152,7 +152,7 @@ Interactive OpenAPI docs are available at `/api/docs`.
 | `GET /api/statistics/*`                   | Dashboard statistics            |
 | `GET /api/export?format=json\|csv\|html`  | Export reports                  |
 
-## 🧪 Testing
+## Testing
 
 ```bash
 cd backend
@@ -163,7 +163,7 @@ ruff check src tests
 
 GitHub Actions runs `pytest`, Ruff and the frontend build on every push.
 
-## 🔒 Security considerations
+## Security considerations
 
 - Built for **local, trusted** use — there is no authentication by default.
 - Uploads: size limits, filename sanitization, uploaded content is never executed.
