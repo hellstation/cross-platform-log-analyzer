@@ -10,7 +10,7 @@ Import Windows and Linux logs, normalize them into one schema, run YAML-based de
 ![Database](https://img.shields.io/badge/database-PostgreSQL-336791.svg)
 ![Docker](https://img.shields.io/badge/docker-ready-2496ed.svg)
 
-[Quick start](#quick-start) · [Detections](#detection-catalog) · [Log sources](#supported-log-sources) · [API](#api) · [Roadmap](#roadmap)
+[Quick start](#quick-start) · [Detections](#detection-catalog) · [Log sources](#supported-log-sources) · [API](#api)
 
 </div>
 
