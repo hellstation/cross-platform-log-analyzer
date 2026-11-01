@@ -1,6 +1,6 @@
 <div align="center">
 
-# **Cross-platform security log analyzer for local SOC-style investigations.**
+# Cross-platform security log analyzer for local SOC-style investigations
 
 Import Windows and Linux logs, normalize them into one schema, run YAML-based detections, triage alerts, and export reports — from a web dashboard or the CLI.
 
@@ -18,7 +18,7 @@ Import Windows and Linux logs, normalize them into one schema, run YAML-based de
 
 ## Overview
 
-SentinelTrace is a Blue Team / SOC analyst toolkit that runs entirely on your machine. Feed it raw logs, and it parses them, removes duplicates, applies detection rules mapped to MITRE ATT&CK, and gives you alerts to investigate.
+This is a Blue Team / SOC analyst toolkit that runs entirely on your machine. Feed it raw logs, and it parses them, removes duplicates, applies detection rules mapped to MITRE ATT&CK, and gives you alerts to investigate.
 
 The web dashboard and the CLI share the **same core engine**, so results are identical no matter how you work.
 
